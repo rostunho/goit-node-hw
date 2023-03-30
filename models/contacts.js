@@ -1,4 +1,4 @@
-const fs = require("fs").promises;
+const fs = require("fs/promises");
 const path = require("path");
 const { nanoid } = require("nanoid");
 
@@ -54,9 +54,12 @@ async function removeContact(contactId) {
   }
 }
 
+const updateContact = async (contactId, body) => {};
+
 module.exports = {
   listContacts,
   getContactById,
-  addContact,
   removeContact,
+  addContact,
+  updateContact,
 };
