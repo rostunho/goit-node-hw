@@ -59,7 +59,7 @@ async function removeContactController(req, res, next) {
     const { id } = req.params;
     const removedContact = await removeContact(id);
     inspectContact(removedContact, id);
-    res.json({ message: "Contact deleted" });
+    res.json({ message: `Contact ${removedContact.name} deleted` });
   } catch (error) {
     next(error);
   }
