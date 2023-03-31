@@ -2,7 +2,7 @@ const fs = require("fs/promises");
 const path = require("path");
 const { nanoid } = require("nanoid");
 
-const contactsPath = path.join(__dirname, "db/contacts.json");
+const contactsPath = path.join(__dirname, "./contacts.json");
 
 async function listContacts() {
   try {
@@ -25,7 +25,7 @@ async function getContactById(contactId) {
   }
 }
 
-async function addContact(name, email, phone) {
+async function addContact({ name, email, phone }) {
   try {
     const allContacts = await listContacts();
     const newContact = { id: nanoid(21), name, email, phone };
@@ -33,28 +33,43 @@ async function addContact(name, email, phone) {
     await fs.writeFile(contactsPath, JSON.stringify(allContacts, null, 2));
     return newContact;
   } catch (error) {
-    return error;
+    return error.message;
   }
 }
 
-async function removeContact(contactId) {
+async function updateContact(id, body) {
   try {
     const allContacts = await listContacts();
-    const contactIndex = allContacts.findIndex(
-      (contact) => contact.id === contactId
+    const contactToUpdateIdx = allContacts.findIndex(
+      (contact) => contact.id === id
     );
-    if (contactIndex < 0) {
+    if (contactToUpdateIdx < 0) {
       return null;
     }
-    const [removedContact] = allContacts.splice(contactIndex, 1);
+    allContacts[contactToUpdateIdx] = { id, ...body };
+    await fs.writeFile(contactsPath, JSON.stringify(allContacts, null, 2));
+    return allContacts[contactToUpdateIdx];
+  } catch (error) {
+    return error.message;
+  }
+}
+
+async function removeContact(id) {
+  try {
+    const allContacts = await listContacts();
+    const contactToRemoveIdx = allContacts.findIndex(
+      (contact) => contact.id === id
+    );
+    if (contactToRemoveIdx < 0) {
+      return null;
+    }
+    const [removedContact] = allContacts.splice(contactToRemoveIdx, 1);
     await fs.writeFile(contactsPath, JSON.stringify(allContacts, null, 2));
     return removedContact;
   } catch (error) {
     return error.message;
   }
 }
-
-const updateContact = async (contactId, body) => {};
 
 module.exports = {
   listContacts,
