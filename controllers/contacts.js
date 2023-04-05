@@ -1,3 +1,4 @@
+const { ctrlWrapper } = require("../utils");
 const {
   listContacts,
   getContactById,
@@ -5,70 +6,49 @@ const {
   updateContact,
   removeContact,
 } = require("../models");
+const { HttpError } = require("../utils");
+const { inspectContact } = require("../utils");
 
-const { HttpError, validateBody, inspectContact } = require("../helpers");
-
-async function getContactsController(req, res, next) {
-  try {
-    const allContacts = await listContacts();
-    res.json(allContacts);
-  } catch (error) {
-    res.status(500).send({ message: error.message });
-  }
+async function getContactsController(req, res) {
+  const allContacts = await listContacts();
+  res.json(allContacts);
 }
 
-async function getContactbyIdController(req, res, next) {
-  try {
-    const { id } = req.params;
-    const contact = await getContactById(id);
+async function getContactbyIdController(req, res) {
+  const { id } = req.params;
+  const contact = await getContactById(id);
+  inspectContact(contact, id);
 
-    if (!contact) {
-      throw HttpError(404, `Contact with id ${id} not found`);
-    }
-
-    res.json(contact);
-  } catch (error) {
-    next(error);
-  }
+  res.json(contact);
 }
 
-async function addContactController(req, res, next) {
-  try {
-    validateBody(req.body);
-    const newContact = await addContact(req.body);
-    res.status(201).json(newContact);
-  } catch (error) {
-    next(error);
-  }
+async function addContactController(req, res) {
+  const newContact = await addContact(req.body);
+
+  res.status(201).json(newContact);
 }
 
-async function updateContactController(req, res, next) {
-  try {
-    validateBody(req.body);
-    const { id } = req.params;
-    const updatedContact = await updateContact(id, req.body);
-    inspectContact(updatedContact, id);
-    res.json(updatedContact);
-  } catch (error) {
-    next(error);
-  }
+async function updateContactController(req, res) {
+  const { id } = req.params;
+  const updatedContact = await updateContact(id, req.body);
+  inspectContact(updatedContact, id);
+
+  res.json(updatedContact);
 }
 
-async function removeContactController(req, res, next) {
-  try {
-    const { id } = req.params;
-    const removedContact = await removeContact(id);
-    inspectContact(removedContact, id);
-    res.json({ message: `Contact ${removedContact.name} deleted` });
-  } catch (error) {
-    next(error);
-  }
+async function removeContactController(req, res) {
+  const { id } = req.params;
+  const removedContact = await removeContact(id);
+
+  inspectContact(removedContact, id);
+
+  res.json({ message: `Contact "${removedContact.name}" deleted` });
 }
 
 module.exports = {
-  getContactsController,
-  getContactbyIdController,
-  addContactController,
-  updateContactController,
-  removeContactController,
+  getContactsController: ctrlWrapper(getContactsController),
+  getContactbyIdController: ctrlWrapper(getContactbyIdController),
+  addContactController: ctrlWrapper(addContactController),
+  updateContactController: ctrlWrapper(updateContactController),
+  removeContactController: ctrlWrapper(removeContactController),
 };
