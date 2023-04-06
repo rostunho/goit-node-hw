@@ -1,8 +1,15 @@
 const app = require("./app");
+const mongoose = require("mongoose");
 require("dotenv").config();
+require("colors");
 
 const PORT = process.env.PORT;
+const DB_HOST = process.env.DB_HOST;
 
-app.listen(PORT, () => {
-  console.log(`Server running. Use our API on port: ${PORT}`);
-});
+mongoose
+  .connect(DB_HOST)
+  .then(() => {
+    app.listen(PORT);
+    console.log(`Server running on port: ${PORT}`.blue);
+  })
+  .catch((error) => console.log(error.message));
