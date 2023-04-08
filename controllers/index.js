@@ -3,6 +3,7 @@ const {
   getContactbyIdController,
   addContactController,
   updateContactController,
+  updateStatusContactController,
   removeContactController,
 } = require("./contacts");
 
@@ -11,5 +12,6 @@ module.exports = {
   getContactbyIdController,
   addContactController,
   updateContactController,
+  updateStatusContactController,
   removeContactController,
 };

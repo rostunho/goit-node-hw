@@ -1,10 +1,13 @@
-const { ctrlWrapper } = require("./ctrlWrapper");
+const { asyncWrapper } = require("./asyncWrapper");
 const { HttpError } = require("./HttpError");
-
-const { inspectContact } = require("./inspectContact");
+const { emailRegex, phoneRegex } = require("./regexPatterns");
+const { inspectBody, inspectStatus } = require("./inspectRequest");
 
 module.exports = {
-  ctrlWrapper,
+  asyncWrapper,
   HttpError,
-  inspectContact,
+  emailRegex,
+  phoneRegex,
+  inspectBody,
+  inspectStatus,
 };

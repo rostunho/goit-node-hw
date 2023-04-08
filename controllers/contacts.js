@@ -1,54 +1,52 @@
-const { ctrlWrapper } = require("../utils");
 const {
-  listContacts,
-  getContactById,
+  getContacts,
+  getContactbyId,
   addContact,
   updateContact,
   removeContact,
-} = require("../models");
-const { HttpError } = require("../utils");
-const { inspectContact } = require("../utils");
+} = require("../services");
+const { asyncWrapper, inspectBody, inspectStatus } = require("../utils");
 
 async function getContactsController(req, res) {
-  const allContacts = await listContacts();
+  const allContacts = await getContacts();
   res.json(allContacts);
 }
 
 async function getContactbyIdController(req, res) {
   const { id } = req.params;
-  const contact = await getContactById(id);
-  inspectContact(contact, id);
-
+  const contact = await getContactbyId(id);
   res.json(contact);
 }
 
 async function addContactController(req, res) {
+  inspectBody(req.body);
   const newContact = await addContact(req.body);
-
   res.status(201).json(newContact);
 }
 
 async function updateContactController(req, res) {
-  const { id } = req.params;
-  const updatedContact = await updateContact(id, req.body);
-  inspectContact(updatedContact, id);
-
+  inspectBody(req.body);
+  const updatedContact = await updateContact(req.params.id, req.body);
   res.json(updatedContact);
+}
+
+async function updateStatusContactController(req, res) {
+  inspectStatus(req.body);
+  const updatedStatus = await updateContact(req.params.id, req.body);
+  res.json(updatedStatus);
 }
 
 async function removeContactController(req, res) {
   const { id } = req.params;
-  const removedContact = await removeContact(id);
-
-  inspectContact(removedContact, id);
-
-  res.json({ message: `Contact "${removedContact.name}" deleted` });
+  await removeContact(id);
+  res.json({ message: `Contact with ID ${id} deleted` });
 }
 
 module.exports = {
-  getContactsController: ctrlWrapper(getContactsController),
-  getContactbyIdController: ctrlWrapper(getContactbyIdController),
-  addContactController: ctrlWrapper(addContactController),
-  updateContactController: ctrlWrapper(updateContactController),
-  removeContactController: ctrlWrapper(removeContactController),
+  getContactsController: asyncWrapper(getContactsController),
+  getContactbyIdController: asyncWrapper(getContactbyIdController),
+  addContactController: asyncWrapper(addContactController),
+  updateContactController: asyncWrapper(updateContactController),
+  updateStatusContactController: asyncWrapper(updateStatusContactController),
+  removeContactController: asyncWrapper(removeContactController),
 };

@@ -1,6 +1,7 @@
 const Joi = require("joi");
+const { phoneRegex } = require("../utils");
 
-const contactSchema = Joi.object({
+const editSchema = Joi.object({
   name: Joi.string()
     .required()
     .messages({ "any.required": `missing required "name" field` }),
@@ -8,16 +9,18 @@ const contactSchema = Joi.object({
     .email()
     .required()
     .messages({ "any.required": `missing required "email" field` }),
-  phone: Joi.string()
-    .pattern(
-      /^(?!\+.*\(.*\).*--.*$)(?!\+.*\(.*\).*-$)(\([0-9]{3}\) [0-9]{3}[-]{1}[0-9]{4})$/
-    )
-    .required()
-    .messages({
-      "any.required": `missing required "email" field`,
-      "string.base": `"phone" must be a string`,
-      "string.pattern.base": `"phone" string must include only numbers and be on format (XXX) XXX-XXXX`,
-    }),
+  phone: Joi.string().pattern(phoneRegex).required().messages({
+    "any.required": `missing required "phone" field`,
+    "string.base": `"phone" must be a string`,
+    "string.pattern.base": `"phone" string must include only numbers and be on format (XXX) XXX-XXXX`,
+  }),
+  favorite: Joi.boolean(),
 });
 
-module.exports = { contactSchema };
+const updateFavoriteSchema = Joi.object({
+  favorite: Joi.boolean()
+    .required()
+    .messages({ "any.required": `missing required "favorite" field` }),
+});
+
+module.exports = { editSchema, updateFavoriteSchema };
