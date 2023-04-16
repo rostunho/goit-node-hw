@@ -8,7 +8,7 @@ const {
   removeContactController,
 } = require("../../controllers");
 const { validateBody } = require("../../middlewares");
-const { editSchema, updateFavoriteSchema } = require("../../schemas");
+const { editContactSchema, updateFavoriteSchema } = require("../../schemas");
 
 const router = express.Router();
 
@@ -16,9 +16,9 @@ router.get("/", getContactsController);
 
 router.get("/:id", getContactByIdController);
 
-router.post("/", validateBody(editSchema), addContactController);
+router.post("/", validateBody(editContactSchema), addContactController);
 
-router.put("/:id", validateBody(editSchema), updateContactController);
+router.put("/:id", validateBody(editContactSchema), updateContactController);
 
 router.patch(
   "/:id/favorite",
