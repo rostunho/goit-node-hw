@@ -1,6 +1,6 @@
 const {
   getContactsController,
-  getContactbyIdController,
+  getContactByIdController,
   addContactController,
   updateContactController,
   updateStatusContactController,
@@ -9,7 +9,7 @@ const {
 
 module.exports = {
   getContactsController,
-  getContactbyIdController,
+  getContactByIdController,
   addContactController,
   updateContactController,
   updateStatusContactController,
