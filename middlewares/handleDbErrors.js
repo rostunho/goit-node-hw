@@ -12,7 +12,12 @@ function handleNotFoundError(error, data, next) {
 function handleConflictError(error, data, next) {
   error.status = 409;
   error.message = `DB: Email "${error.keyValue.email}" already in use`;
-  console.dir(error);
+  next();
+}
+
+function handleUnauthorized(error, data, next) {
+  error.status = 401;
+  error.message = `Email or password is wrong`;
   next();
 }
 
@@ -20,4 +25,5 @@ module.exports = {
   handleSaveError,
   handleNotFoundError,
   handleConflictError,
+  handleUnauthorized,
 };

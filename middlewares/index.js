@@ -4,6 +4,7 @@ const {
   handleSaveError,
   handleNotFoundError,
   handleConflictError,
+  handleUnauthorized,
 } = require("./handleDbErrors");
 
 module.exports = {
@@ -12,4 +13,5 @@ module.exports = {
   handleSaveError,
   handleNotFoundError,
   handleConflictError,
+  handleUnauthorized,
 };

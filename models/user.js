@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-const { handleConflictError } = require("../middlewares");
+const { handleConflictError, handleSaveError } = require("../middlewares");
 const { emailRegex } = require("../utils");
 
 const userSchema = new Schema({
@@ -27,6 +27,7 @@ const userSchema = new Schema({
 });
 
 userSchema.post("save", handleConflictError);
+userSchema.post("findOne", handleSaveError);
 
 const User = model("user", userSchema);
 

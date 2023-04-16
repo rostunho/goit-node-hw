@@ -19,13 +19,14 @@ const registerSchema = Joi.object({
   token: Joi.string(),
 });
 
-const loginSchema = Joi.isSchema({
+const loginSchema = Joi.object({
   password: Joi.string()
     .min(6)
     .required()
     .messages({ "any.required": "Set password for user" }),
   email: Joi.string().pattern(emailRegex).required().messages({
     "any.required": `"email" field is required and should be a valid email address`,
+    "string.pattern.base": `"email" should be a valid email address`,
   }),
 });
 
