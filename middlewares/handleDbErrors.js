@@ -16,4 +16,8 @@ function handleConflictError(error, data, next) {
   next();
 }
 
-module.exports = { handleSaveError, handleNotFoundError, handleConflictError };
+module.exports = {
+  handleSaveError,
+  handleNotFoundError,
+  handleConflictError,
+};

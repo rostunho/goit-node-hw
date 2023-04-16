@@ -1,8 +1,9 @@
 const { updateContact } = require("../../services");
-const { inspectBody, HttpError } = require("../../utils");
+const { inspectBody, validateId, HttpError } = require("../../utils");
 
 async function updateContactController(req, res) {
   inspectBody(req.body);
+  validateId(req.params.id);
   const updatedContact = await updateContact(req.params.id, req.body);
 
   if (!updatedContact) {

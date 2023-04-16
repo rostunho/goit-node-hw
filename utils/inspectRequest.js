@@ -1,4 +1,5 @@
-const { HttpError } = require("./HttpError");
+const { isValidObjectId } = require("mongoose");
+const { HttpError } = require("../utils");
 
 function inspectBody(body) {
   const { name, email, phone } = body;
@@ -19,4 +20,10 @@ function inspectStatus(body) {
   }
 }
 
-module.exports = { inspectBody, inspectStatus };
+async function validateId(id) {
+  if (!isValidObjectId) {
+    throw HttpError(404, `ID ${id} is on invalid format`);
+  }
+}
+
+module.exports = { inspectBody, inspectStatus, validateId };

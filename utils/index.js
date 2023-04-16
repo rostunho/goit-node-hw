@@ -1,7 +1,7 @@
 const { asyncWrapper } = require("./asyncWrapper");
 const { HttpError } = require("./HttpError");
 const { emailRegex, phoneRegex } = require("./regexPatterns");
-const { inspectBody, inspectStatus } = require("./inspectRequest");
+const { inspectBody, inspectStatus, validateId } = require("./inspectRequest");
 
 module.exports = {
   asyncWrapper,
@@ -10,4 +10,5 @@ module.exports = {
   phoneRegex,
   inspectBody,
   inspectStatus,
+  validateId,
 };
