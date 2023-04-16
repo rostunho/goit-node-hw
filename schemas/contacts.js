@@ -1,5 +1,4 @@
 const Joi = require("joi");
-const { registerSchema } = require("./user");
 const { phoneRegex, emailRegex } = require("../utils");
 
 const editContactSchema = Joi.object({
@@ -16,7 +15,7 @@ const editContactSchema = Joi.object({
     "string.pattern.base": `"phone" string must include only numbers and be on format (XXX) XXX-XXXX`,
   }),
   favorite: Joi.boolean(),
-  owner: Joi.string().ref(registerSchema),
+  owner: Joi.string(),
 });
 
 const updateFavoriteSchema = Joi.object({

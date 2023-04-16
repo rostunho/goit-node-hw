@@ -7,6 +7,8 @@ const {
   removeContactController,
 } = require("./contacts");
 
+const { registerController } = require("./auth");
+
 module.exports = {
   getContactsController,
   getContactByIdController,
@@ -14,4 +16,6 @@ module.exports = {
   updateContactController,
   updateStatusContactController,
   removeContactController,
+
+  registerController,
 };

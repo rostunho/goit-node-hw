@@ -9,4 +9,11 @@ function handleNotFoundError(error, data, next) {
   next();
 }
 
-module.exports = { handleSaveError, handleNotFoundError };
+function handleConflictError(error, data, next) {
+  error.status = 409;
+  error.message = `DB: Email "${error.keyValue.email}" already in use`;
+  console.dir(error);
+  next();
+}
+
+module.exports = { handleSaveError, handleNotFoundError, handleConflictError };

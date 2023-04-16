@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const { handleConflictError } = require("../middlewares");
 const { emailRegex } = require("../utils");
 
 const userSchema = new Schema({
@@ -25,8 +26,8 @@ const userSchema = new Schema({
   token: String,
 });
 
-userSchema.post("save", () => {});
+userSchema.post("save", handleConflictError);
 
-const User = model("auth", userSchema);
+const User = model("user", userSchema);
 
 module.exports = { User };

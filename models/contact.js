@@ -32,6 +32,6 @@ contactSchema.post("findOne", handleNotFoundError);
 contactSchema.post("findOneAndUpdate", handleNotFoundError);
 contactSchema.post("findOneAndDelete", handleNotFoundError);
 
-const Contact = model("contacts", contactSchema);
+const Contact = model("contact", contactSchema);
 
 module.exports = { Contact };
