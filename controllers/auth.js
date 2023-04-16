@@ -1,8 +1,12 @@
+const bcrypt = require("bcryptjs");
 const { asyncWrapper } = require("../utils");
 const { User } = require("../models");
 
 async function registerController(req, res) {
-  const user = await User.create(req.body);
+  const { password } = req.body;
+  const hashPassword = await bcrypt.hash(password, 10);
+
+  const user = await User.create({ ...req.body, password: hashPassword });
 
   res.status(201).json({
     user: {
