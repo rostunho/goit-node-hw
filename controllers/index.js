@@ -1,5 +1,5 @@
 const {
-  getContactsController,
+  getAllContactsController,
   getContactByIdController,
   addContactController,
   updateContactController,
@@ -15,7 +15,7 @@ const {
 } = require("./auth");
 
 module.exports = {
-  getContactsController,
+  getAllContactsController,
   getContactByIdController,
   addContactController,
   updateContactController,

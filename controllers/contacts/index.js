@@ -1,5 +1,5 @@
 const { asyncWrapper } = require("../../utils");
-const getContactsController = require("./getContactsController");
+const getAllContactsController = require("./getAllContactsController");
 const getContactByIdController = require("./getContactByIdController");
 const addContactController = require("./addContactController");
 const updateContactController = require("./updateContactController");
@@ -7,7 +7,7 @@ const updateStatusContactController = require("./updateStatusContactController")
 const removeContactController = require("./removeContactController");
 
 module.exports = {
-  getContactsController: asyncWrapper(getContactsController),
+  getAllContactsController: asyncWrapper(getAllContactsController),
   getContactByIdController: asyncWrapper(getContactByIdController),
   addContactController: asyncWrapper(addContactController),
   updateContactController: asyncWrapper(updateContactController),

@@ -1,13 +1,26 @@
 const { Contact } = require("../../models");
 
-async function getContacts(owner, page, limit) {
+async function getContacts(owner, page, limit, favorite) {
   const skip = (page - 1) * limit;
 
-  const allContacts = await Contact.find({ owner }, "-__v", {
+  if (favorite) {
+    const allOwnFavorieContacts = await Contact.find(
+      { owner, favorite },
+      "-__v",
+      {
+        skip,
+        limit,
+      }
+    ).populate("owner", "name email phone");
+    return allOwnFavorieContacts;
+  }
+
+  const allOwnContacts = await Contact.find({ owner }, "-__v", {
     skip,
     limit,
   }).populate("owner", "name email phone");
-  return allContacts;
+
+  return allOwnContacts;
 }
 
 async function getContactbyId(id) {

@@ -1,6 +1,6 @@
 const express = require("express");
 const {
-  getContactsController,
+  getAllContactsController,
   getContactByIdController,
   addContactController,
   updateContactController,
@@ -12,7 +12,7 @@ const { editContactSchema, updateFavoriteSchema } = require("../../schemas");
 
 const router = express.Router();
 
-router.get("/", authenticate, getContactsController);
+router.get("/", authenticate, getAllContactsController);
 
 router.get("/:id", authenticate, getContactByIdController);
 
