@@ -9,7 +9,4 @@ function handleNotFoundError(error, data, next) {
   next();
 }
 
-module.exports = {
-  handleSaveError,
-  handleNotFoundError,
-};
+module.exports = { handleSaveError, handleNotFoundError };

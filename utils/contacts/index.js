@@ -1,3 +1,11 @@
 const { inspectBody, inspectStatus, validateId } = require("./inspectRequest");
 
-module.exports = { inspectBody, inspectStatus, validateId };
+const { handleSaveError, handleNotFoundError } = require("./handleDBErrors.js");
+
+module.exports = {
+  inspectBody,
+  inspectStatus,
+  validateId,
+  handleSaveError,
+  handleNotFoundError,
+};

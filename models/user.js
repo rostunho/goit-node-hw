@@ -1,5 +1,5 @@
 const { Schema, model } = require("mongoose");
-const { handleConflictError, handleUnauthorized } = require("../middlewares");
+const { handleConflictError, handleUnauthorized } = require("../utils");
 const { emailRegex } = require("../utils");
 
 const userSchema = new Schema({

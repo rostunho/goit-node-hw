@@ -1,8 +1,16 @@
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const { User } = require("../../models");
 const { HttpError } = require("../../utils");
 const { SECRET_KEY } = process.env;
+
+async function registerNewUser(body) {
+  const hashPassword = await bcrypt.hash(body.password, 10);
+  const user = await User.create({ ...body, password: hashPassword });
+
+  return user;
+}
 
 async function findUserByEmail(email) {
   const user = await User.findOne({ email });
@@ -21,4 +29,4 @@ function createToken(user, lifetime) {
   return token;
 }
 
-module.exports = { findUserByEmail, createToken };
+module.exports = { registerNewUser, findUserByEmail, createToken };

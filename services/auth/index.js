@@ -1,3 +1,3 @@
-const { findUserByEmail, createToken } = require("./users");
+const { registerNewUser, findUserByEmail, createToken } = require("./users");
 
-module.exports = { findUserByEmail, createToken };
+module.exports = { registerNewUser, findUserByEmail, createToken };

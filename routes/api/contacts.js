@@ -7,25 +7,36 @@ const {
   updateStatusContactController,
   removeContactController,
 } = require("../../controllers");
-const { validateBody } = require("../../middlewares");
+const { authenticate, validateBody } = require("../../middlewares");
 const { editContactSchema, updateFavoriteSchema } = require("../../schemas");
 
 const router = express.Router();
 
-router.get("/", getContactsController);
+router.get("/", authenticate, getContactsController);
 
-router.get("/:id", getContactByIdController);
+router.get("/:id", authenticate, getContactByIdController);
 
-router.post("/", validateBody(editContactSchema), addContactController);
+router.post(
+  "/",
+  authenticate,
+  validateBody(editContactSchema),
+  addContactController
+);
 
-router.put("/:id", validateBody(editContactSchema), updateContactController);
+router.put(
+  "/:id",
+  authenticate,
+  validateBody(editContactSchema),
+  updateContactController
+);
 
 router.patch(
   "/:id/favorite",
+  authenticate,
   validateBody(updateFavoriteSchema),
   updateStatusContactController
 );
 
-router.delete("/:id", removeContactController);
+router.delete("/:id", authenticate, removeContactController);
 
 module.exports = router;

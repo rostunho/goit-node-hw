@@ -1,17 +1,13 @@
-const bcrypt = require("bcryptjs");
-// const jwt = require("jsonwebtoken");
-require("dotenv").config();
-const { User } = require("../models");
 const { asyncWrapper } = require("../utils");
-const { findUserByEmail, createToken } = require("../services");
+const {
+  registerNewUser,
+  findUserByEmail,
+  createToken,
+} = require("../services");
 const { checkPassword } = require("../utils");
 
-// const { SECRET_KEY } = process.env;
-
 async function registerController(req, res) {
-  const { password } = req.body;
-  const hashPassword = await bcrypt.hash(password, 10);
-  const user = await User.create({ ...req.body, password: hashPassword });
+  const user = await registerNewUser(req.body);
 
   res.status(201).json({
     user: {
@@ -28,9 +24,6 @@ async function loginController(req, res) {
   await checkPassword(user, password);
 
   const token = createToken(user, 23);
-
-  // const payload = { id: user._id };
-  // const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "23h" });
 
   res.json({
     token: token,

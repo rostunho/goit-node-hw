@@ -1,3 +1,3 @@
-const { handleConflictError, handleUnauthorized } = require("./handleDbErrors");
+const { authenticate } = require("./authenticate");
 
-module.exports = { handleConflictError, handleUnauthorized };
+module.exports = { authenticate };

@@ -1,6 +1,16 @@
 const { asyncWrapper, HttpError, emailRegex, phoneRegex } = require("./common");
-const { inspectBody, inspectStatus, validateId } = require("./contacts");
-const { checkPassword } = require("./auth");
+const {
+  inspectBody,
+  inspectStatus,
+  validateId,
+  handleSaveError,
+  handleNotFoundError,
+} = require("./contacts");
+const {
+  checkPassword,
+  handleConflictError,
+  handleUnauthorized,
+} = require("./auth");
 
 module.exports = {
   inspectBody,
@@ -11,4 +21,8 @@ module.exports = {
   emailRegex,
   phoneRegex,
   checkPassword,
+  handleSaveError,
+  handleNotFoundError,
+  handleConflictError,
+  handleUnauthorized,
 };

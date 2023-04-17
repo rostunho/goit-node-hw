@@ -1,5 +1,6 @@
 const { Schema, model } = require("mongoose");
-const { handleSaveError, handleNotFoundError } = require("../middlewares");
+// const { handleNotFoundError } = require("../middlewares");
+const { handleSaveError, handleNotFoundError } = require("../utils");
 const { emailRegex, phoneRegex } = require("../utils");
 
 const contactSchema = new Schema({
