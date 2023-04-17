@@ -30,4 +30,11 @@ const loginSchema = Joi.object({
   }),
 });
 
-module.exports = { registerSchema, loginSchema };
+const updateUserStatusSchema = Joi.object({
+  subscription: Joi.string()
+    .valid("starter", "pro", "business")
+    .required()
+    .messages({ "any.required": `Subscription field is required` }),
+});
+
+module.exports = { registerSchema, loginSchema, updateUserStatusSchema };

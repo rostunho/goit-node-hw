@@ -4,6 +4,7 @@ const {
   findUserByEmail,
   createToken,
   removeToken,
+  changeUserStatus,
 } = require("../services");
 const { checkPassword } = require("../utils");
 
@@ -37,12 +38,15 @@ async function loginController(req, res) {
 
 async function getCurrentUserController(req, res) {
   const { name, email, subscription } = req.user;
+  res.json({ name, email, subscription });
+}
 
-  res.json({
-    name,
-    email,
-    subscription,
-  });
+async function updateUserStatusController(req, res) {
+  const { _id } = req.user;
+  const { subscription } = req.body;
+  const userWithUpdatedStatus = await changeUserStatus(_id, subscription);
+
+  res.json(userWithUpdatedStatus);
 }
 
 async function logoutController(req, res) {
@@ -56,5 +60,6 @@ module.exports = {
   registerController: asyncWrapper(registerController),
   loginController: asyncWrapper(loginController),
   getCurrentUserController: asyncWrapper(getCurrentUserController),
+  updateUserStatusController: asyncWrapper(updateUserStatusController),
   logoutController: asyncWrapper(logoutController),
 };

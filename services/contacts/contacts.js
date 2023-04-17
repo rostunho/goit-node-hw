@@ -1,6 +1,6 @@
 const { Contact } = require("../../models");
 
-async function getContacts(owner, page, limit, favorite) {
+async function getAllContacts(owner, page, limit, favorite) {
   const skip = (page - 1) * limit;
 
   if (favorite) {
@@ -46,7 +46,7 @@ async function removeContact(id) {
 }
 
 module.exports = {
-  getContacts,
+  getAllContacts,
   getContactbyId,
   addContact,
   updateContact,

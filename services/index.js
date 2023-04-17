@@ -1,5 +1,5 @@
 const {
-  getContacts,
+  getAllContacts,
   getContactbyId,
   addContact,
   updateContact,
@@ -11,10 +11,11 @@ const {
   findUserByEmail,
   createToken,
   removeToken,
+  changeUserStatus,
 } = require("./auth");
 
 module.exports = {
-  getContacts,
+  getAllContacts,
   getContactbyId,
   addContact,
   updateContact,
@@ -23,4 +24,5 @@ module.exports = {
   findUserByEmail,
   createToken,
   removeToken,
+  changeUserStatus,
 };

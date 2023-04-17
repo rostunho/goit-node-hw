@@ -3,7 +3,7 @@ const getAllContactsController = require("./getAllContactsController");
 const getContactByIdController = require("./getContactByIdController");
 const addContactController = require("./addContactController");
 const updateContactController = require("./updateContactController");
-const updateStatusContactController = require("./updateStatusContactController");
+const updateContactStatusController = require("./updateContactStatusController");
 const removeContactController = require("./removeContactController");
 
 module.exports = {
@@ -11,6 +11,6 @@ module.exports = {
   getContactByIdController: asyncWrapper(getContactByIdController),
   addContactController: asyncWrapper(addContactController),
   updateContactController: asyncWrapper(updateContactController),
-  updateStatusContactController: asyncWrapper(updateStatusContactController),
+  updateContactStatusController: asyncWrapper(updateContactStatusController),
   removeContactController: asyncWrapper(removeContactController),
 };

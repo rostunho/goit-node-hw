@@ -34,4 +34,31 @@ async function removeToken(id) {
   await User.findByIdAndUpdate(id, { token: "" });
 }
 
-module.exports = { registerNewUser, findUserByEmail, createToken, removeToken };
+async function changeUserStatus(id, subscription) {
+  if (
+    subscription !== "starter" &&
+    subscription !== "pro" &&
+    subscription !== "business"
+  ) {
+    throw HttpError(
+      400,
+      `DB: "subscription" must be one of [starter, pro, business] `
+    );
+  }
+
+  const updatedUser = await User.findOneAndUpdate(
+    { _id: id },
+    { subscription },
+    { new: true }
+  );
+
+  return updatedUser;
+}
+
+module.exports = {
+  registerNewUser,
+  findUserByEmail,
+  createToken,
+  removeToken,
+  changeUserStatus,
+};

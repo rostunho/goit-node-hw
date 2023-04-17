@@ -3,7 +3,7 @@ const {
   getContactByIdController,
   addContactController,
   updateContactController,
-  updateStatusContactController,
+  updateContactStatusController,
   removeContactController,
 } = require("./contacts");
 
@@ -11,6 +11,7 @@ const {
   registerController,
   loginController,
   getCurrentUserController,
+  updateUserStatusController,
   logoutController,
 } = require("./auth");
 
@@ -19,11 +20,12 @@ module.exports = {
   getContactByIdController,
   addContactController,
   updateContactController,
-  updateStatusContactController,
+  updateContactStatusController,
   removeContactController,
 
   registerController,
   loginController,
   getCurrentUserController,
+  updateUserStatusController,
   logoutController,
 };

@@ -1,7 +1,7 @@
 const { updateContact } = require("../../services");
 const { inspectStatus, validateId, HttpError } = require("../../utils");
 
-async function updateStatusContactController(req, res) {
+async function updateContactStatusController(req, res) {
   inspectStatus(req.body);
   validateId(req.params.id);
   const updatedStatus = await updateContact(req.params.id, req.body);
@@ -13,4 +13,4 @@ async function updateStatusContactController(req, res) {
   res.json(updatedStatus);
 }
 
-module.exports = updateStatusContactController;
+module.exports = updateContactStatusController;

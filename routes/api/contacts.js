@@ -4,7 +4,7 @@ const {
   getContactByIdController,
   addContactController,
   updateContactController,
-  updateStatusContactController,
+  updateContactStatusController,
   removeContactController,
 } = require("../../controllers");
 const { authenticate, validateBody } = require("../../middlewares");
@@ -34,7 +34,7 @@ router.patch(
   "/:id/favorite",
   authenticate,
   validateBody(updateFavoriteSchema),
-  updateStatusContactController
+  updateContactStatusController
 );
 
 router.delete("/:id", authenticate, removeContactController);
