@@ -6,7 +6,12 @@ const {
   removeContact,
 } = require("./contacts/contacts");
 
-const { registerNewUser, findUserByEmail, createToken } = require("./auth");
+const {
+  registerNewUser,
+  findUserByEmail,
+  createToken,
+  removeToken,
+} = require("./auth");
 
 module.exports = {
   getContacts,
@@ -17,4 +22,5 @@ module.exports = {
   registerNewUser,
   findUserByEmail,
   createToken,
+  removeToken,
 };

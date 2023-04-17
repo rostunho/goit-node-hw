@@ -22,11 +22,16 @@ async function findUserByEmail(email) {
   return user;
 }
 
-function createToken(user, lifetime) {
+async function createToken(user, lifetime) {
   const payload = { id: user._id };
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: `${lifetime}h` });
+  await User.findByIdAndUpdate(user._id, { token });
 
   return token;
 }
 
-module.exports = { registerNewUser, findUserByEmail, createToken };
+async function removeToken(id) {
+  await User.findByIdAndUpdate(id, { token: "" });
+}
+
+module.exports = { registerNewUser, findUserByEmail, createToken, removeToken };
