@@ -1,5 +1,5 @@
 const { isValidObjectId } = require("mongoose");
-const { HttpError } = require("../utils");
+const { HttpError } = require("..");
 
 function inspectBody(body) {
   const { name, email, phone } = body;

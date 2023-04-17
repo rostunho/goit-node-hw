@@ -1,16 +1,16 @@
 const { Schema, model } = require("mongoose");
-const { handleConflictError, handleSaveError } = require("../middlewares");
+const { handleConflictError, handleUnauthorized } = require("../middlewares");
 const { emailRegex } = require("../utils");
 
 const userSchema = new Schema({
   name: {
     type: String,
-    // required: [true, "Set name for contact"],
+    required: [true, "Set name for contact"],
   },
   email: {
     type: String,
     required: [true, "Email is required"],
-    match: [emailRegex, "Set valid email for contacts"],
+    match: [emailRegex, "Enter valid email "],
     unique: true,
   },
   password: {
@@ -27,7 +27,7 @@ const userSchema = new Schema({
 });
 
 userSchema.post("save", handleConflictError);
-userSchema.post("findOne", handleSaveError);
+userSchema.post("findOne", handleUnauthorized);
 
 const User = model("user", userSchema);
 

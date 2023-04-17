@@ -1,17 +1,17 @@
-const { validateBody } = require("./validateBody");
-const { handleErrors } = require("./handleErrors");
 const {
   handleSaveError,
   handleNotFoundError,
-  handleConflictError,
-  handleUnauthorized,
-} = require("./handleDbErrors");
+  validateBody,
+} = require("./contacts");
+
+const { handleConflictError, handleUnauthorized } = require("./auth");
+const { handleErrors } = require("./common");
 
 module.exports = {
-  validateBody,
-  handleErrors,
   handleSaveError,
   handleNotFoundError,
+  validateBody,
   handleConflictError,
   handleUnauthorized,
+  handleErrors,
 };

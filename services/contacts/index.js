@@ -4,9 +4,7 @@ const {
   addContact,
   updateContact,
   removeContact,
-} = require("./contacts/contacts");
-
-const { findUserByEmail, createToken } = require("./auth");
+} = require("./contacts");
 
 module.exports = {
   getContacts,
@@ -14,6 +12,4 @@ module.exports = {
   addContact,
   updateContact,
   removeContact,
-  findUserByEmail,
-  createToken,
 };
