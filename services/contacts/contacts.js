@@ -1,7 +1,7 @@
 const { Contact } = require("../../models");
 
-async function getContacts() {
-  const allContacts = await Contact.find({}, "-__v");
+async function getContacts(owner) {
+  const allContacts = await Contact.find({ owner }, "-__v");
   return allContacts;
 }
 

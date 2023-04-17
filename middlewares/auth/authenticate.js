@@ -5,7 +5,7 @@ const { HttpError } = require("../../utils");
 const { SECRET_KEY } = process.env;
 
 async function authenticate(req, res, next) {
-  const { authorization } = req.headers;
+  const { authorization = "" } = req.headers;
   const [bearer, token] = authorization.split(" ");
 
   if (bearer !== "Bearer") {
@@ -20,6 +20,7 @@ async function authenticate(req, res, next) {
       next(HttpError(401, "Unauthorized: Account is deactivated"));
     }
 
+    req.user = user;
     next();
   } catch {
     next(HttpError(401, "Unauthorized: token is not valid"));
