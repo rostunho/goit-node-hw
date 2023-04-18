@@ -8,8 +8,8 @@ async function authenticate(req, res, next) {
   const { authorization = "" } = req.headers;
   const [bearer, token] = authorization.split(" ");
 
-  if (bearer !== "Bearer") {
-    next(HttpError(401, "Unauthorized: wrong token type"));
+  if (bearer !== "Bearer" || !token) {
+    next(HttpError(401, "Unauthorized: no token or wrong token type"));
   }
 
   try {
