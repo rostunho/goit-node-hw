@@ -4,12 +4,13 @@ const {
   loginSchema,
   updateUserStatusSchema,
 } = require("../../schemas");
-const { authenticate, validateBody } = require("../../middlewares");
+const { authenticate, validateBody, upload } = require("../../middlewares");
 const {
   registerController,
   loginController,
   getCurrentUserController,
   updateUserStatusController,
+  updateAvatarController,
   logoutController,
 } = require("../../controllers");
 
@@ -27,6 +28,13 @@ router.patch(
 );
 
 router.get("/current", authenticate, getCurrentUserController);
+
+router.patch(
+  "/avatars",
+  authenticate,
+  upload.single("avatar"),
+  updateAvatarController
+);
 
 router.post("/logout", authenticate, logoutController);
 

@@ -1,10 +1,11 @@
 const { validateBody } = require("./contacts");
 
-const { authenticate } = require("./auth");
+const { authenticate, upload } = require("./auth");
 const { handleErrors } = require("./common");
 
 module.exports = {
   validateBody,
   authenticate,
   handleErrors,
+  upload,
 };

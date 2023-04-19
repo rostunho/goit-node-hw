@@ -3,6 +3,7 @@ const { registerController } = require("./registerController");
 const { loginController } = require("./loginController");
 const { getCurrentUserController } = require("./getCurrentUserController");
 const { updateUserStatusController } = require("./updateUserStatusController");
+const { updateAvatarController } = require("./updateAvatarController");
 const { logoutController } = require("./logoutController");
 
 module.exports = {
@@ -11,4 +12,5 @@ module.exports = {
   getCurrentUserController: asyncWrapper(getCurrentUserController),
   updateUserStatusController: asyncWrapper(updateUserStatusController),
   logoutController: asyncWrapper(logoutController),
+  updateAvatarController: asyncWrapper(updateAvatarController),
 };
