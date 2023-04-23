@@ -12,6 +12,7 @@ const {
   createToken,
   removeToken,
   changeUserStatus,
+  processAvatar,
 } = require("./auth");
 
 module.exports = {
@@ -25,4 +26,5 @@ module.exports = {
   createToken,
   removeToken,
   changeUserStatus,
+  processAvatar,
 };

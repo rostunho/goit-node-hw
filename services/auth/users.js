@@ -2,9 +2,13 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const gravatar = require("gravatar");
+const Jimp = require("jimp");
+const fs = require("fs/promises");
+const path = require("path");
 const { User } = require("../../models");
 const { HttpError } = require("../../utils");
 const { SECRET_KEY } = process.env;
+const avatarsDir = path.join(__dirname, "../../", "public", "avatars");
 
 async function registerNewUser(body) {
   const hashPassword = await bcrypt.hash(body.password, 10);
@@ -63,10 +67,26 @@ async function changeUserStatus(id, subscription) {
   return updatedUser;
 }
 
+async function processAvatar(id, tempPath, filename) {
+  const image = await Jimp.read(tempPath);
+
+  const avatarName = `${id}_${filename}`;
+
+  image.resize(250, 250).write(`${avatarsDir}/${avatarName}`);
+
+  await fs.unlink(tempPath);
+
+  const avatarUrl = path.join("avatars", avatarName);
+  await User.findByIdAndUpdate(id, { avatarUrl });
+
+  return avatarUrl;
+}
+
 module.exports = {
   registerNewUser,
   findUserByEmail,
   createToken,
   removeToken,
   changeUserStatus,
+  processAvatar,
 };
