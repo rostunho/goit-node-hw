@@ -28,7 +28,7 @@ async function findUserByEmail(email) {
   const user = await User.findOne({ email });
 
   if (!user) {
-    throw HttpError(401, "Controller. Unzuthorized: email is wrong");
+    throw HttpError(401, "Controller. Unauthorized: email is wrong");
   }
 
   return user;
