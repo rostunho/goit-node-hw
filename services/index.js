@@ -8,6 +8,8 @@ const {
 
 const {
   registerNewUser,
+  findUserByVerificationToken,
+  sentUserNewVerificationEmail,
   findUserByEmail,
   createToken,
   removeToken,
@@ -22,6 +24,8 @@ module.exports = {
   updateContact,
   removeContact,
   registerNewUser,
+  findUserByVerificationToken,
+  sentUserNewVerificationEmail,
   findUserByEmail,
   createToken,
   removeToken,

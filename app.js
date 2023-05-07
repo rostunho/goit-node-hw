@@ -2,7 +2,6 @@ const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
 const { handleErrors } = require("./middlewares");
-
 const { authRouter, contactsRouter } = require("./routes");
 
 const app = express();

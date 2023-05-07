@@ -10,6 +10,8 @@ const {
 const {
   registerController,
   loginController,
+  verifyEmailController,
+  resendVerifyEmailController,
   getCurrentUserController,
   updateUserStatusController,
   updateAvatarController,
@@ -25,6 +27,8 @@ module.exports = {
   removeContactController,
 
   registerController,
+  verifyEmailController,
+  resendVerifyEmailController,
   loginController,
   getCurrentUserController,
   updateUserStatusController,

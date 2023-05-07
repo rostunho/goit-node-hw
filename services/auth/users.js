@@ -7,21 +7,55 @@ const fs = require("fs/promises");
 const path = require("path");
 const { User } = require("../../models");
 const { HttpError } = require("../../utils");
-const { SECRET_KEY } = process.env;
+const { nanoid } = require("nanoid");
+const { sendEmail } = require("../../helpers");
+
+const { SECRET_KEY, BASE_URL } = process.env;
+
 const avatarsDir = path.join(__dirname, "../../", "public", "avatars");
 
 async function registerNewUser(body) {
   const hashPassword = await bcrypt.hash(body.password, 10);
 
   const avatarUrl = gravatar.url(body.email);
+  const verificationToken = nanoid();
 
   const user = await User.create({
     ...body,
     password: hashPassword,
     avatarUrl,
+    verificationToken,
   });
 
+  const verifyEmail = {
+    to: body.email,
+    subject: "Verify Email",
+    html: `<a target="_blank" href="${BASE_URL}/api/v1/users/verify/${verificationToken}">Click here to verify email</a>`,
+  };
+
+  await sendEmail(verifyEmail);
+
   return user;
+}
+
+async function sentUserNewVerificationEmail(email) {
+  const user = User.findOne({ email });
+
+  if (!user) {
+    throw HttpError(400, "Email not found");
+  }
+
+  if (user.verify) {
+    throw HttpError(400, "Verification has already been passed");
+  }
+
+  const newVerifyEmail = {
+    to: email,
+    subject: "Verify Email",
+    html: `<a target="_blank" href="${BASE_URL}/api/v1/users/verify/${user.verificationToken}">Click here to verify email</a>`,
+  };
+
+  await sendEmail(newVerifyEmail);
 }
 
 async function findUserByEmail(email) {
@@ -29,6 +63,10 @@ async function findUserByEmail(email) {
 
   if (!user) {
     throw HttpError(401, "Controller. Unauthorized: email is wrong");
+  }
+
+  if (!user.verify) {
+    throw HttpError(401, "Controller. Email not verified");
   }
 
   return user;
@@ -44,6 +82,21 @@ async function createToken(user, lifetime) {
 
 async function removeToken(id) {
   await User.findByIdAndUpdate(id, { token: "" });
+}
+
+async function findUserByVerificationToken(verificationToken) {
+  const user = await User.findOne({ verificationToken });
+
+  if (!user) {
+    throw HttpError(404, "Email not found");
+  }
+
+  await User.findByIdAndUpdate(user._id, {
+    verify: true,
+    verificationToken: null,
+  });
+
+  return user;
 }
 
 async function changeUserStatus(id, subscription) {
@@ -85,6 +138,8 @@ async function processAvatar(id, tempPath, filename) {
 module.exports = {
   registerNewUser,
   findUserByEmail,
+  findUserByVerificationToken,
+  sentUserNewVerificationEmail,
   createToken,
   removeToken,
   changeUserStatus,

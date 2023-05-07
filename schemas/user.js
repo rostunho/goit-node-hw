@@ -19,6 +19,13 @@ const registerSchema = Joi.object({
   token: Joi.string(),
 });
 
+const emailSchema = Joi.object({
+  email: Joi.string().pattern(emailRegex).required().messages({
+    "any.required": `"email" field is required and should be a valid email address`,
+    "string.pattern.base": `"email" should be a valid email address`,
+  }),
+});
+
 const loginSchema = Joi.object({
   password: Joi.string()
     .min(6)
@@ -37,4 +44,4 @@ const updateUserStatusSchema = Joi.object({
     .messages({ "any.required": `Subscription field is required` }),
 });
 
-module.exports = { registerSchema, loginSchema, updateUserStatusSchema };
+module.exports = { registerSchema, emailSchema, loginSchema, updateUserStatusSchema };
